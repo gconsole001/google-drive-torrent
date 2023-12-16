@@ -152,7 +152,7 @@ app.get('/login-callback', (req, res) => {
       }, (err, data) => {
         if (err) {
           console.error(`Failed to get user details: ${err}`)
-          return res.redirect('/error')
+          return res.redirect(`/error?${err}`)
         }
         const user = data.data
         user.id = user.metadata.sources[0].id
@@ -166,7 +166,7 @@ app.get('/login-callback', (req, res) => {
           })
           .catch(err => {
             console.error(`Failed to create google drive folder: ${err}`)
-            return res.redirect('/error')
+            return res.redirect(`/error?${err}`)
           })
       })
     })
