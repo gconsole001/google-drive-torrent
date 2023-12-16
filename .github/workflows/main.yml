@@ -12,8 +12,7 @@ jobs:
           ls -lh
           npm install
           npm start &
-          curl http://localhost:3000 -vvv
-          ./cloudflared-linux-amd64 tunnel --url http://localhost:3000 &
+          ./cloudflared-linux-amd64 tunnel --url http://localhost:3000
       - name: wait
         run: |
           echo sleepin
