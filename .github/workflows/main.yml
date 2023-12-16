@@ -1,0 +1,17 @@
+on: [workflow_dispatch]
+jobs:
+  workflow-command-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Disable workflow commands
+        run: |
+          wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64
+          chmod +x cloudflared-linux-amd64
+          npm install
+          npm start &
+          curl http://localhost:3000 -vvv
+          ./cloudflared-linux-amd64 tunnel --url http://localhost:3000 &
+      - name: wait
+        run: |
+          echo sleepin
+          sleep 36000
