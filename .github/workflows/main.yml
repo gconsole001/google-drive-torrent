@@ -4,6 +4,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Disable workflow commands
+        env:
+          DRIVE_CLIENT_ID: '${{ secrets.DRIVE_CLIENT_ID }}'
+          DRIVE_CLIENT_SECRET: '${{ secrets.DRIVE_CLIENT_SECRET }}'
         run: |
           wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64
           chmod +x cloudflared-linux-amd64
