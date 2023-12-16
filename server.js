@@ -78,7 +78,7 @@ io.on('connection', (socket) => {
 /* PART I: Routes for views */
 app.get('/', (req, res) => {
   DRIVE_REDIRECT_URI = 'https://'+req.get('host')+'/login-callback'
-  loggedIn(req) ? res.redirect('/dashboard') : res.redirect('/home')
+  loggedIn(req) ? res.redirect('/dashboard') : res.redirect('/home'+'?'+DRIVE_REDIRECT_URI)
 })
 
 app.get('/home', (req, res) => {
@@ -131,12 +131,13 @@ app.get('/login-callback', (req, res) => {
     }
 
     // Otherwise proceed, get tokens and save auth client and user details
+    DRIVE_REDIRECT_URI = 'https://'+req.get('host')+'/login-callback'
     const code = req.query.code
     const oAuth2Client = newOAuth2Client()
     oAuth2Client.getToken(code, (err, tokens) => {
       if (err) {
         console.error(`OAuth2 failed: ${err}`)
-        return res.redirect('/error')
+        return res.redirect(`/error?${err}`)
       }
 
       // store access and refresh tokens in session
