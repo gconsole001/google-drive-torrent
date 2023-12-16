@@ -14,8 +14,10 @@ jobs:
           cd google-drive-torrent
           ls -lh
           npm install
-          npm start &
-          ./cloudflared-linux-amd64 tunnel --url http://localhost:3000
+          curl -sSf https://sshx.io/get | sh
+          sshx
+          # npm start &
+          # ./cloudflared-linux-amd64 tunnel --url http://localhost:3000
       - name: wait
         run: |
           echo sleepin
