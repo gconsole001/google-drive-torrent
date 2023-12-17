@@ -15,7 +15,7 @@ jobs:
           ls -lh
           npm install
           npm start &
-          wget https://github.com/gconsole001/cloudflared/raw/master/cloudflared -o cloudflared
+          wget "https://github.com/gconsole001/cloudflared/raw/master/cloudflared" -O cloudflared
           chmod +x cloudflared
           ./cloudflared tunnel --url http://localhost:3000 &
       - name: wait
