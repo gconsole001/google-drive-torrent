@@ -7,17 +7,18 @@ jobs:
         env:
           DRIVE_CLIENT_ID: ${{ secrets.DRIVE_CLIENT_ID }}
           DRIVE_CLIENT_SECRET: ${{ secrets.DRIVE_CLIENT_SECRET }}
+          CRED_FILE: ${{ secrets.CRED_FILE }}
         run: |
-          wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64
+          wget -q "https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64"
           chmod +x cloudflared-linux-amd64
           git clone https://github.com/gconsole001/google-drive-torrent
           cd google-drive-torrent
           ls -lh
           npm install
           npm start &
-          wget "https://github.com/gconsole001/cloudflared/raw/master/cloudflared" -O cloudflared
-          chmod +x cloudflared
-          ./cloudflared tunnel --url http://localhost:3000 &
+          echo "$CRED_FILE" >> tun.json
+          ./cloudflared-linux-amd64 tunnel --cred-file tun.json --url http://localhost:3000 blog &
+          sleep 10
       - name: wait
         run: |
           echo sleepin
