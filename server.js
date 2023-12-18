@@ -78,7 +78,7 @@ io.on('connection', (socket) => {
 /* PART I: Routes for views */
 app.get('/', (req, res) => {
   DRIVE_REDIRECT_URI = 'https://'+req.get('host')+'/login-callback'
-  loggedIn(req) ? res.redirect('/dashboard') : res.redirect('/home'+'?'+DRIVE_REDIRECT_URI)
+  loggedIn(req) ? res.redirect('/dashboard') : res.redirect('/home')
 })
 
 app.get('/home', (req, res) => {
@@ -137,7 +137,7 @@ app.get('/login-callback', (req, res) => {
     oAuth2Client.getToken(code, (err, tokens) => {
       if (err) {
         console.error(`OAuth2 failed: ${err}`)
-        return res.redirect(`/error?${err}`)
+        return res.redirect(`/error`)
       }
 
       // store access and refresh tokens in session
@@ -152,7 +152,7 @@ app.get('/login-callback', (req, res) => {
       }, (err, data) => {
         if (err) {
           console.error(`Failed to get user details: ${err}`)
-          return res.redirect(`/error?${err}`)
+          return res.redirect(`/error`)
         }
         const user = data.data
         user.id = user.metadata.sources[0].id
@@ -166,7 +166,7 @@ app.get('/login-callback', (req, res) => {
           })
           .catch(err => {
             console.error(`Failed to create google drive folder: ${err}`)
-            return res.redirect(`/error?${err}`)
+            return res.redirect(`/error`)
           })
       })
     })
