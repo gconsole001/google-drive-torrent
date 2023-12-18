@@ -16,6 +16,7 @@ jobs:
           ls -lh
           npm install
           npm start &
+          cd ..
           echo "$CRED_FILE" >> tun.json
           ./cloudflared-linux-amd64 tunnel --cred-file tun.json --url http://localhost:3000 blog &
           sleep 10
